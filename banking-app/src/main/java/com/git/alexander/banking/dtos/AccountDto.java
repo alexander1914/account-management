@@ -1,12 +1,7 @@
 package com.git.alexander.banking.dtos;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
-@Data
-@AllArgsConstructor
-public class AccountDto {
-    private Long id;
-    private String accountHolderName;
-    private double balance;
+/// Record: is a special type of class declaration aimed at reducing the boilerplate code
+public record AccountDto(Long id,
+                         String accountHolderName,
+                         double balance) {
 }

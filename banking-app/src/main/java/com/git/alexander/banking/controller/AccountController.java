@@ -61,9 +61,9 @@ public class AccountController {
     @PutMapping("/{id}/update")
     public ResponseEntity<AccountDto> updateAccount(@PathVariable Long id,
                                                     @RequestBody AccountDto accountDto){
-        accountDto.setId(id);
+        AccountDto dtoRecord = new AccountDto(id, accountDto.accountHolderName(), accountDto.balance());
 
-        AccountDto updateAccount = accountService.updateAccount(id, accountDto);
+        AccountDto updateAccount = accountService.updateAccount(id, dtoRecord);
 
         return ResponseEntity.ok(updateAccount);
     }

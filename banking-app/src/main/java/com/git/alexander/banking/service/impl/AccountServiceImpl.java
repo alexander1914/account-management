@@ -91,8 +91,8 @@ public class AccountServiceImpl implements AccountService {
                 .orElseThrow(() -> new RuntimeException("Account does not exists"));
 
         // Mapping DTO with Entity
-        account.setAccountHolderName(accountDto.getAccountHolderName());
-        account.setBalance(accountDto.getBalance());
+        account.setAccountHolderName(accountDto.accountHolderName());
+        account.setBalance(accountDto.balance());
 
         Account updatedAccount = accountRepository.save(account);
 

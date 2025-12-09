@@ -15,5 +15,11 @@ Following these steps to configure this spring boot your machine
 * [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
 * [Oracle DB with Docker](https://medium.com/xp-inc/dica-r%C3%A1pida-criando-base-de-dados-oracle-vers%C3%A3o-21-3-0-no-docker-357b05754b84)
 
+### New contents in Java
 
-### Swagger API 
+**Records:** is a special type of class declaration aimed at reducing the boilerplate code. 
+Java records were introduced with the intention to be used as a fast way to create data carrier classes, 
+i.e. the classes whose objective is to simply contain data and carry it between modules, 
+also known as POJOs (Plain Old Java Objects) and DTOs (Data Transfer Objects).
+
+### Swagger API
