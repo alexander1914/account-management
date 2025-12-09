@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RequestMapping("/api/accounts")
@@ -23,6 +24,13 @@ public class AccountController {
         AccountDto accountDto = accountService.getAccountById(id);
 
         return ResponseEntity.ok(accountDto);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<AccountDto>> getAllAccounts(){
+        List<AccountDto> accounts = accountService.getAllAccounts();
+
+        return ResponseEntity.ok(accounts);
     }
 
     @PostMapping
@@ -58,5 +66,12 @@ public class AccountController {
         AccountDto updateAccount = accountService.updateAccount(id, accountDto);
 
         return ResponseEntity.ok(updateAccount);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteAccount(@PathVariable Long id){
+        accountService.deleteAccount(id);
+
+        return ResponseEntity.ok("Account is deleted with success...");
     }
 }

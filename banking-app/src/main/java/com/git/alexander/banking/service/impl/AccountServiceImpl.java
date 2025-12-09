@@ -7,6 +7,8 @@ import com.git.alexander.banking.repository.AccountRepository;
 import com.git.alexander.banking.service.AccountService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AccountServiceImpl implements AccountService {
 
@@ -18,12 +20,23 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountDto getAccountById(Long id){
-
+        // Find an account
         Account account = accountRepository
                 .findById(id)
                 .orElseThrow(() -> new RuntimeException("Account does not exists"));
 
         return AccountMapper.mapToAccountDto(account);
+    }
+
+    @Override
+    public List<AccountDto> getAllAccounts() {
+        // Find all accounts on database
+        List<Account> accounts = accountRepository.findAll();
+
+        return accounts
+                .stream()
+                .map((AccountMapper::mapToAccountDto))
+                .toList();
     }
 
     @Override
@@ -38,7 +51,6 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountDto deposit(Long id, double amount){
-
         // Find an account
         Account account = accountRepository
                 .findById(id)
@@ -85,5 +97,15 @@ public class AccountServiceImpl implements AccountService {
         Account updatedAccount = accountRepository.save(account);
 
         return AccountMapper.mapToAccountDto(updatedAccount);
+    }
+
+    @Override
+    public void deleteAccount(Long id) {
+        // Find an account
+        Account account = accountRepository.
+                findById(id)
+                .orElseThrow(() -> new RuntimeException("Account does not exists"));
+
+        accountRepository.deleteById(id);
     }
 }
