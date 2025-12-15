@@ -2,6 +2,7 @@ package com.git.alexander.banking.service.impl;
 
 import com.git.alexander.banking.dtos.AccountDto;
 import com.git.alexander.banking.entity.Account;
+import com.git.alexander.banking.exception.AccountException;
 import com.git.alexander.banking.mapper.AccountMapper;
 import com.git.alexander.banking.repository.AccountRepository;
 import com.git.alexander.banking.service.AccountService;
@@ -23,7 +24,7 @@ public class AccountServiceImpl implements AccountService {
         // Find an account
         Account account = accountRepository
                 .findById(id)
-                .orElseThrow(() -> new RuntimeException("Account does not exists"));
+                .orElseThrow(() -> new AccountException("Account does not exists"));
 
         return AccountMapper.mapToAccountDto(account);
     }
@@ -54,7 +55,7 @@ public class AccountServiceImpl implements AccountService {
         // Find an account
         Account account = accountRepository
                 .findById(id)
-                .orElseThrow(() -> new RuntimeException("Account does not exists"));
+                .orElseThrow(() -> new AccountException("Account does not exists"));
 
         // Add new deposit
         double total = account.getBalance() + amount;
@@ -69,7 +70,7 @@ public class AccountServiceImpl implements AccountService {
         // Find an account
         Account account = accountRepository.
                 findById(id)
-                .orElseThrow(() -> new RuntimeException("Account does not exists"));
+                .orElseThrow(() -> new AccountException("Account does not exists"));
 
         // Validate the balance on account
         if (account.getBalance() < amount){
@@ -88,7 +89,7 @@ public class AccountServiceImpl implements AccountService {
         // Find an account
         Account account = accountRepository.
                 findById(id)
-                .orElseThrow(() -> new RuntimeException("Account does not exists"));
+                .orElseThrow(() -> new AccountException("Account does not exists"));
 
         // Mapping DTO with Entity
         account.setAccountHolderName(accountDto.accountHolderName());
@@ -104,7 +105,7 @@ public class AccountServiceImpl implements AccountService {
         // Find an account
         Account account = accountRepository.
                 findById(id)
-                .orElseThrow(() -> new RuntimeException("Account does not exists"));
+                .orElseThrow(() -> new AccountException("Account does not exists"));
 
         accountRepository.deleteById(id);
     }

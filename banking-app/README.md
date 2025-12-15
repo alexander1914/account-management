@@ -1,4 +1,4 @@
-# App Banking
+**App Banking**
 an application to simulate a bank with different transactions like,
 send money your account, transfer money etc.
 
@@ -15,11 +15,24 @@ Following these steps to configure this spring boot your machine
 * [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
 * [Oracle DB with Docker](https://medium.com/xp-inc/dica-r%C3%A1pida-criando-base-de-dados-oracle-vers%C3%A3o-21-3-0-no-docker-357b05754b84)
 
-### New contents in Java
+# New contents in Java
 
 **Records:** is a special type of class declaration aimed at reducing the boilerplate code. 
 Java records were introduced with the intention to be used as a fast way to create data carrier classes, 
 i.e. the classes whose objective is to simply contain data and carry it between modules, 
 also known as POJOs (Plain Old Java Objects) and DTOs (Data Transfer Objects).
 
-### Swagger API
+# Exception Handling
+is a mechanism to handle runtime errors, allowing the normal flow of a program to continue. 
+Exceptions are events that occur during program execution that disrupt the normal flow of instructions.
+
+**@ResponseStatus:** is an annotation in Spring is the powerful tool used in the building RESTFull web services. 
+It is allowed developers to control HTTP (Hypertext Transfer Protocol) status code returned by the application's, 
+endpoints or when specific exceptions are thrown.
+
+**ExceptionHandler:** is an annotation that helps deal with errors and exceptions present in APIs, 
+delivering a robust enterprise application.
+
+**@ControllerAdvice:** is an annotation that introduced in Spring 3.2 that enables global exception handling, 
+across your entire Spring MVC application. 
+It acts like Aspect-Oriented Programming (AOP), intercepting exceptions thrown by controllers.
