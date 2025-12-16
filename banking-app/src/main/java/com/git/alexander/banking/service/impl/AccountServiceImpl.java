@@ -1,6 +1,7 @@
 package com.git.alexander.banking.service.impl;
 
 import com.git.alexander.banking.dtos.AccountDto;
+import com.git.alexander.banking.dtos.TransferFundDto;
 import com.git.alexander.banking.entity.Account;
 import com.git.alexander.banking.exception.AccountException;
 import com.git.alexander.banking.mapper.AccountMapper;
@@ -107,6 +108,29 @@ public class AccountServiceImpl implements AccountService {
                 findById(id)
                 .orElseThrow(() -> new AccountException("Account does not exists"));
 
-        accountRepository.deleteById(id);
+        accountRepository.deleteById(account.getId());
+    }
+
+    @Override
+    public void transferFunds(TransferFundDto transferFundDto) {
+        // Retrieve the account from which we send the amount
+        Account fromAccount = accountRepository
+                .findById(transferFundDto.fromAccountId())
+                .orElseThrow(() -> new AccountException("Account does not exists"));
+
+        // Retrieve the account to which we send the amound
+        Account toAccount = accountRepository
+                .findById(transferFundDto.toAccountId())
+                .orElseThrow(() -> new AccountException("Account does not exists"));
+
+        // Debit the amount from fromAccount object
+        fromAccount.setBalance(fromAccount.getBalance() - transferFundDto.amount());
+
+        // Credit the amount to toAccount object
+        toAccount.setBalance(toAccount.getBalance() + transferFundDto.amount());
+
+        // Save these changes objects on database
+        accountRepository.save(fromAccount);
+        accountRepository.save(toAccount);
     }
 }

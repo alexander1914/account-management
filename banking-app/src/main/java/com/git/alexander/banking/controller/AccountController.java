@@ -1,6 +1,7 @@
 package com.git.alexander.banking.controller;
 
 import com.git.alexander.banking.dtos.AccountDto;
+import com.git.alexander.banking.dtos.TransferFundDto;
 import com.git.alexander.banking.service.AccountService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -73,5 +74,12 @@ public class AccountController {
         accountService.deleteAccount(id);
 
         return ResponseEntity.ok("Account is deleted with success...");
+    }
+
+    @PostMapping("/transfer")
+    public ResponseEntity<String> transferFundAccount(@RequestBody TransferFundDto transferFundDto){
+        accountService.transferFunds(transferFundDto);
+
+        return ResponseEntity.ok("Transfer Successfully");
     }
 }

@@ -1,6 +1,7 @@
 package com.git.alexander.banking.service;
 
 import com.git.alexander.banking.dtos.AccountDto;
+import com.git.alexander.banking.dtos.TransferFundDto;
 
 import java.util.List;
 
@@ -13,4 +14,5 @@ public interface AccountService {
     AccountDto withdraw(Long id, double amount);
     AccountDto updateAccount(Long id, AccountDto accountDto);
     void deleteAccount(Long id);
+    void transferFunds(TransferFundDto transferFundDto);
 }
