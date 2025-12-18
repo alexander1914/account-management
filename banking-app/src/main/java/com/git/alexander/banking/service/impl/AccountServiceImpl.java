@@ -3,21 +3,28 @@ package com.git.alexander.banking.service.impl;
 import com.git.alexander.banking.dtos.AccountDto;
 import com.git.alexander.banking.dtos.TransferFundDto;
 import com.git.alexander.banking.entity.Account;
+import com.git.alexander.banking.entity.Transaction;
 import com.git.alexander.banking.exception.AccountException;
 import com.git.alexander.banking.mapper.AccountMapper;
 import com.git.alexander.banking.repository.AccountRepository;
+import com.git.alexander.banking.repository.TransactionsRepository;
 import com.git.alexander.banking.service.AccountService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class AccountServiceImpl implements AccountService {
 
     private final AccountRepository accountRepository;
+    private final TransactionsRepository transactionsRepository;
+    private static final String TRANSACTION_TYPE_DEPOSIT = "DEPOSIT";
+    private static final String TRANSACTION_TYPE_WITHDRAW = "WITHDRAW";
 
-    public AccountServiceImpl(AccountRepository accountRepository) {
+    public AccountServiceImpl(AccountRepository accountRepository, TransactionsRepository transactionsRepository) {
         this.accountRepository = accountRepository;
+        this.transactionsRepository = transactionsRepository;
     }
 
     @Override
@@ -63,6 +70,15 @@ public class AccountServiceImpl implements AccountService {
         account.setBalance(total);
         Account savedAccount = accountRepository.save(account);
 
+        // Save transaction history of deposit
+        Transaction transaction = new Transaction();
+        transaction.setAccountId(id);
+        transaction.setAmount(amount);
+        transaction.setTransactionType(TRANSACTION_TYPE_DEPOSIT);
+        transaction.setTimestamp(LocalDateTime.now());
+
+        transactionsRepository.save(transaction);
+
         return AccountMapper.mapToAccountDto(savedAccount);
     }
 
@@ -81,6 +97,15 @@ public class AccountServiceImpl implements AccountService {
         double total = account.getBalance() - amount;
         account.setBalance(total);
         Account savedAccount = accountRepository.save(account);
+
+        // Save transaction history of withdraw
+        Transaction transaction = new Transaction();
+        transaction.setAccountId(id);
+        transaction.setAmount(amount);
+        transaction.setTransactionType(TRANSACTION_TYPE_WITHDRAW);
+        transaction.setTimestamp(LocalDateTime.now());
+
+        transactionsRepository.save(transaction);
 
         return AccountMapper.mapToAccountDto(savedAccount);
     }
