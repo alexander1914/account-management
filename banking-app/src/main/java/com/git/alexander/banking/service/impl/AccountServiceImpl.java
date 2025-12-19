@@ -4,6 +4,7 @@ import com.git.alexander.banking.dtos.AccountDto;
 import com.git.alexander.banking.dtos.TransferFundDto;
 import com.git.alexander.banking.entity.Account;
 import com.git.alexander.banking.entity.Transaction;
+import com.git.alexander.banking.enums.TypeTransactions;
 import com.git.alexander.banking.exception.AccountException;
 import com.git.alexander.banking.mapper.AccountMapper;
 import com.git.alexander.banking.repository.AccountRepository;
@@ -19,8 +20,6 @@ public class AccountServiceImpl implements AccountService {
 
     private final AccountRepository accountRepository;
     private final TransactionsRepository transactionsRepository;
-    private static final String TRANSACTION_TYPE_DEPOSIT = "DEPOSIT";
-    private static final String TRANSACTION_TYPE_WITHDRAW = "WITHDRAW";
 
     public AccountServiceImpl(AccountRepository accountRepository, TransactionsRepository transactionsRepository) {
         this.accountRepository = accountRepository;
@@ -74,7 +73,7 @@ public class AccountServiceImpl implements AccountService {
         Transaction transaction = new Transaction();
         transaction.setAccountId(id);
         transaction.setAmount(amount);
-        transaction.setTransactionType(TRANSACTION_TYPE_DEPOSIT);
+        transaction.setTransactionType(TypeTransactions.DEPOSIT.getDescription());
         transaction.setTimestamp(LocalDateTime.now());
 
         transactionsRepository.save(transaction);
@@ -102,7 +101,7 @@ public class AccountServiceImpl implements AccountService {
         Transaction transaction = new Transaction();
         transaction.setAccountId(id);
         transaction.setAmount(amount);
-        transaction.setTransactionType(TRANSACTION_TYPE_WITHDRAW);
+        transaction.setTransactionType(TypeTransactions.WITHDRAW.getDescription());
         transaction.setTimestamp(LocalDateTime.now());
 
         transactionsRepository.save(transaction);
