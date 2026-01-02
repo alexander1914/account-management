@@ -147,6 +147,10 @@ public class AccountServiceImpl implements AccountService {
                 .findById(transferFundDto.toAccountId())
                 .orElseThrow(() -> new AccountException("Account does not exists"));
 
+        if (fromAccount.getBalance() < transferFundDto.amount()){
+            throw new RuntimeException("Insufficient Amount =(");
+        }
+
         // Debit the amount from fromAccount object
         fromAccount.setBalance(fromAccount.getBalance() - transferFundDto.amount());
 
@@ -156,5 +160,14 @@ public class AccountServiceImpl implements AccountService {
         // Save these changes objects on database
         accountRepository.save(fromAccount);
         accountRepository.save(toAccount);
+
+        // Save the history of Transaction
+        Transaction transaction = new Transaction();
+        transaction.setAccountId(transferFundDto.fromAccountId());
+        transaction.setAmount(transferFundDto.amount());
+        transaction.setTransactionType(TypeTransactions.TRANSFER.getDescription());
+        transaction.setTimestamp(LocalDateTime.now());
+
+        transactionsRepository.save(transaction);
     }
 }

@@ -5,7 +5,8 @@ import lombok.Getter;
 @Getter
 public enum TypeTransactions {
     DEPOSIT("DEPOSIT"),
-    WITHDRAW("WITHDRAW");
+    WITHDRAW("WITHDRAW"),
+    TRANSFER("TRANSFER");
 
     private final String description;
 
