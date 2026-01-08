@@ -1,6 +1,7 @@
 package com.git.alexander.banking.controller;
 
 import com.git.alexander.banking.dtos.AccountDto;
+import com.git.alexander.banking.dtos.TransactionDto;
 import com.git.alexander.banking.dtos.TransferFundDto;
 import com.git.alexander.banking.service.AccountService;
 import org.springframework.http.HttpStatus;
@@ -81,5 +82,12 @@ public class AccountController {
         accountService.transferFunds(transferFundDto);
 
         return ResponseEntity.ok("Transfer Successfully");
+    }
+
+    @GetMapping("/{id}/transactions")
+    public ResponseEntity<List<TransactionDto>> fetchAccountTransactions(@PathVariable("id") Long accountId){
+        List<TransactionDto> transactionDtoList = accountService.getAccountTransactions(accountId);
+
+        return ResponseEntity.ok(transactionDtoList);
     }
 }

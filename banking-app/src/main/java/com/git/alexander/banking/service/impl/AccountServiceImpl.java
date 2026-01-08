@@ -1,6 +1,7 @@
 package com.git.alexander.banking.service.impl;
 
 import com.git.alexander.banking.dtos.AccountDto;
+import com.git.alexander.banking.dtos.TransactionDto;
 import com.git.alexander.banking.dtos.TransferFundDto;
 import com.git.alexander.banking.entity.Account;
 import com.git.alexander.banking.entity.Transaction;
@@ -14,7 +15,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 @Service
 public class AccountServiceImpl implements AccountService {
 
@@ -169,5 +172,25 @@ public class AccountServiceImpl implements AccountService {
         transaction.setTimestamp(LocalDateTime.now());
 
         transactionsRepository.save(transaction);
+    }
+
+    @Override
+    public List<TransactionDto> getAccountTransactions(Long accountId) {
+        // Find all the transactions on database
+        List<Transaction> transactions = transactionsRepository.findByAccountIdOrderByTimestampDesc(accountId);
+
+        return transactions.stream()
+                .map(this::convertEntityToDto)
+                .collect(Collectors.toList());
+    }
+
+    private TransactionDto convertEntityToDto(Transaction transaction){
+        return new TransactionDto(
+                transaction.getId(),
+                transaction.getAccountId(),
+                transaction.getAmount(),
+                transaction.getTransactionType(),
+                transaction.getTimestamp()
+        );
     }
 }
