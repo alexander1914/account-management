@@ -12,7 +12,7 @@
 	<artifactId>banking-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>banking-app</name>
-	<description>Account Management Banking is application to simule many features of bank nowadays.</description>
+	<description>Account Management Banking is application to simulate many features of bank nowadays.</description>
 	<url/>
 	<licenses>
 		<license/>

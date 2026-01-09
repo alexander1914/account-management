@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@SuppressWarnings("ResultOfMethodCallIgnored")
 @Service
 public class AccountServiceImpl implements AccountService {
 
